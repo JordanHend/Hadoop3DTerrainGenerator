@@ -1,9 +1,9 @@
 Hadoop3DTerrainGenerator
-
+---------------------------------------------------------------------------------------------
 It uses Hadoop/Hipi in a multicluster environment to average height image data from a bundle of images and then pull that average image for use in a OpenGL 3D rendering program.
 ---------------------------------------------------------------------------------------------
 
-Technoligies used: 
+Technologies used: 
 
 Java with Hadoop and Hipi was used for the MapReduce. 
 
