@@ -1,0 +1,25 @@
+#version 330 core
+in vec4 FragPos;
+
+
+uniform sampler2D texture_diffuse1;
+uniform vec3 lightPos;
+uniform float far_plane;
+in vec2 TexCoords;
+void main()
+{
+    vec4 temp = texture(texture_diffuse1, TexCoords);
+  
+//  if(temp.w < 0.5)
+ // discard;
+
+    // get distance between fragment and light source
+    float lightDistance = length(FragPos.xyz - lightPos);
+    
+    // map to [0;1] range by dividing by far_plane
+    lightDistance = lightDistance / far_plane;
+    
+    // write this as modified depth
+    gl_FragDepth = lightDistance;
+    
+} 

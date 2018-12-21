@@ -1,0 +1,3 @@
+echo Deleting height map from local file system (if it exists)...
+@ECHO OFF
+del /f image.jpeg

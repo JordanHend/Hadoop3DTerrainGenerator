@@ -1,0 +1,30 @@
+﻿  Main.cpp
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\main.cpp(119): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\main.cpp(120): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\main.cpp(124): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\main.cpp(125): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\main.cpp(127): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\main.cpp(128): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\main.cpp(181): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\main.cpp(313): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\main.cpp(315): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\main.cpp(317): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\main.cpp(325): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\main.cpp(327): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\main.cpp(341): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\main.cpp(341): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\main.cpp(342): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\main.cpp(342): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\main.cpp(343): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\main.cpp(344): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\main.cpp(345): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+  ConfigReader.cpp
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\configreader.cpp(26): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\configreader.cpp(28): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\configreader.cpp(30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\configreader.cpp(32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\configreader.cpp(34): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jordan\documents\visual studio 2015\projects\terrainrenderer\terrainrenderer\configreader.cpp(36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
+  TerrainRenderer.vcxproj -> C:\Users\Jordan\documents\visual studio 2015\Projects\TerrainRenderer\Debug\TerrainRenderer.exe
+  TerrainRenderer.vcxproj -> C:\Users\Jordan\documents\visual studio 2015\Projects\TerrainRenderer\Debug\TerrainRenderer.pdb (Partial PDB)

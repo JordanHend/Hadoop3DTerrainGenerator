@@ -1,0 +1,3 @@
+echo Removing Image from Hadoop (if it exists)...
+@ECHO OFF
+hadoop fs -rm  /image.jpeg

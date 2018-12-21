@@ -1,0 +1,206 @@
+#version 330 core
+
+out vec4 FragColor;
+struct Material
+{
+
+    float shininess;    
+};
+struct DirLight {
+    vec3 direction;
+    
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+};
+
+struct PointLight {
+    vec3 position;
+    
+    float constant;
+    float linear;
+    float quadratic;
+    
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+};
+
+struct SpotLight {
+    vec3 position;
+    vec3 direction;
+    float cutOff;
+    float outerCutOff;
+  
+    float constant;
+    float linear;
+    float quadratic;
+  
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;       
+};
+
+
+uniform int numPointLights;
+uniform int numDirLights;
+uniform int numSpotLights;
+uniform DirLight dirLights[5];
+uniform PointLight pointLights[5];
+uniform SpotLight spotLights[5];
+uniform vec3 viewPos;
+ 
+
+
+
+uniform sampler2D texture_diffuse1;
+uniform sampler2D texture_r;
+uniform sampler2D texture_g;
+uniform sampler2D texture_b;
+uniform sampler2D blendmap;
+uniform samplerCube depthMap;
+
+
+uniform float far_plane;
+uniform bool shadows;
+
+float ShadowCalculation(vec3 fragPos);
+
+in vec3 Normal;  
+in vec3 FragPos;  
+in vec2 TexCoords;
+in float visibility;
+
+// function prototypes
+vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, vec4 color);
+vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec4 color, float x);
+
+
+
+float ShadowCalculation(vec3 fragPos, vec3 lightPos)
+{
+    vec3 fragToLight = fragPos - lightPos;
+
+    float currentDepth = length(fragToLight);
+
+    // PCF
+     float shadow = 0.0;
+     float bias = 5.0; 
+     float samples = 4.0;
+     float offset = 0.1;
+     for(float x = -offset; x < offset; x += offset / (samples * 0.5))
+     {
+         for(float y = -offset; y < offset; y += offset / (samples * 0.5))
+         {
+            for(float z = -offset; z < offset; z += offset / (samples * 0.5))
+             {
+                 float closestDepth = texture(depthMap, fragToLight + vec3(x, y, z)).r; // use lightdir to lookup cubemap
+                 closestDepth *= far_plane;   // Undo mapping [0;1]
+                 if(currentDepth - bias > closestDepth)
+                     shadow += 1.0;
+             }
+         }
+    }
+     shadow /= (samples * samples * samples);
+
+    return shadow;
+
+}
+
+
+void main()
+{
+
+
+
+    vec4 blendMapColor = texture(blendmap, TexCoords);
+    float backtexAmount = 1 - (blendMapColor.r + blendMapColor.g + blendMapColor.b);
+
+    vec2 tiledCoords = TexCoords * 40.0;
+
+    vec4 bgTexColor = texture(texture_diffuse1, tiledCoords) * backtexAmount;
+    vec4 rColor = texture(texture_r, tiledCoords) * blendMapColor.r;
+    vec4 gColor = texture(texture_g, tiledCoords) * blendMapColor.g;
+    vec4 bColor = texture(texture_b, tiledCoords) * blendMapColor.b;
+
+    vec4 totalColor = bgTexColor + rColor + gColor  + bColor;
+
+vec4 fogColor = vec4(0.0, 0.0, 0.0, 0.5);
+    // properties
+    vec3 norm = normalize(Normal);
+    vec3 viewDir = normalize(viewPos - FragPos);
+    float shadow;
+    
+    vec3 result;
+    for(int i = 0; i < numDirLights; i++)
+       result += CalcDirLight(dirLights[i], norm, viewDir, totalColor);
+    // phase 2: point lights
+    for(int i = 0; i < numPointLights; i++)
+    {
+     
+        result += CalcPointLight(pointLights[i], norm, FragPos, viewDir,totalColor, shadow);    
+
+    }
+ 
+    
+   
+
+    vec4 outColor = mix(fogColor, vec4(result, 1.0), visibility);
+    FragColor = vec4(result, 1);
+
+
+}
+
+
+// calculates the color when using a directional light.
+vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, vec4 color)
+{
+    vec3 lightDir = normalize(-light.direction);
+    // diffuse shading
+    float diff = max(dot(normal, lightDir), 0.0);
+    // specular shading
+    vec3 reflectDir = reflect(-lightDir, normal);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 1.0);
+    // combine results
+    vec3 ambient = light.ambient * color.xyz;
+    vec3 diffuse = light.diffuse * diff * color.xyz;
+    vec3 specular = light.specular * spec * color.xyz;
+    return (ambient + diffuse + specular);
+}
+
+// calculates the color when using a point light.
+vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec4 color, float x)
+{
+
+
+    vec3 anormal = normalize(normal);
+    vec3 lightColor = vec3(0.3);
+    // ambient
+    vec3 ambient = 0.3 * color.xyz;
+    // diffuse   
+     vec3 lightDir = normalize(light.position - fragPos);
+     float intensity = dot(lightDir,normal);
+    float diff = max(dot(lightDir, anormal), 0.0);
+    vec3 diffuse = diff * lightColor;
+    // attenuation
+    float distance = length(light.position - fragPos);
+    float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));    
+
+
+    //ambient *= attenuation;
+    //diffuse *= attenuation;
+
+    // calculate shadow
+    float shadow = true ? ShadowCalculation(fragPos, light.position) : 0.0;          
+    vec3 temp = (ambient + (1.0 - shadow)) * color.xyz;   
+    if(intensity > 0.95)
+    return temp * 1.0;
+    else if(intensity > 0.75)
+       return temp * 0.7;
+    else if(intensity > 0.55)
+       return temp * 0.5;
+    else if(intensity > 0.25)
+       return temp * 0.2;
+    else
+       return temp * 0.2;
+}
