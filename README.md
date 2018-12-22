@@ -8,6 +8,8 @@ Technologies used:
 Java with Hadoop and Hipi was used for the MapReduce. 
 
 C++ with OpenGL to render terrain. 
+
+
 	--FreeType for text fonts, stb_image for loading textures.
 ----------------------------------------------------------------------------------------------
 
